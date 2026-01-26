@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bank-blue: #0052cc;
+  --color-bank-dark: #172b4d;
+  --color-bank-bg: #f4f5f7;
+  --color-bank-success: #36b37e;
+  --color-bank-error: #ff5630;
+}
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  @apply bg-gray-200 text-bank-dark m-0 p-0 antialiased overflow-x-hidden;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
