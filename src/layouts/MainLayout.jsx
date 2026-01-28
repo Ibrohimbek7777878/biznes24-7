@@ -7,12 +7,13 @@ const MainLayout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Massiv bitta qilindi va path'lar to'g'rilandi
   const menu = [
     { icon: <Home />, label: "Asosiy", path: "/" },
     { icon: <CreditCard />, label: "Moliya", path: "/payments" },
-    { icon: <Bot />, label: "AI Biznes", path: "/ai-assistant" },
+    { icon: <Bot />, label: "AI Biznes", path: "/ai-insights" },
     { icon: <FileText />, label: "Hujjatlar", path: "/documents" },
-    { icon: <LayoutGrid />, label: "Servislar", path: "/procurement" },
+    { icon: <LayoutGrid />, label: "Servislar", path: "/services" },
   ];
 
   return (
@@ -45,18 +46,23 @@ const MainLayout = ({ children }) => {
                   isActive ? "text-blue-600" : "text-slate-400"
                 }`}
               >
+                {/* Aktiv tab ko'rsatkichi */}
                 {isActive && (
                   <motion.div
                     layoutId="activeTab"
                     className="absolute -top-4 w-12 h-1 bg-blue-600 rounded-full"
                   />
                 )}
+
                 {React.cloneElement(item.icon, {
                   size: isActive ? 24 : 22,
                   strokeWidth: isActive ? 2.5 : 2,
                 })}
+
                 <span
-                  className={`text-[10px] font-bold uppercase tracking-tighter ${isActive ? "opacity-100" : "opacity-60"}`}
+                  className={`text-[10px] font-bold uppercase tracking-tighter ${
+                    isActive ? "opacity-100" : "opacity-60"
+                  }`}
                 >
                   {item.label}
                 </span>

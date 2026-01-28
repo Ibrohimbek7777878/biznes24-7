@@ -15,9 +15,19 @@ import MainLayout from "./layouts/MainLayout";
 import AccountDetail from "./pages/AccountDetail";
 import CreatePayment from "./pages/CreatePayment";
 import SuccessPage from "./pages/SuccessPages";
-import ProcurementAI from "./pages/AI/Procurement"; // Fayl nomi to'g'riligini tekshiring
+import ProcurementAI from "./pages/AI/Procurement"; 
 import DeepAnalytics from "./pages/Analytics/DeepAnalytics";
+import CashFlow from "./pages/Analytics/CashFlow";
 import Roles from "./pages/Admin/Role";
+import AIInsights from "./pages/Analytics/AIInsights";
+import TransactionHistory from "./pages/Finance/TransactionHistory"
+import PartnerDetail from "./pages/Finance/ParentDetail";
+import Services from "./pages/Services/Services";
+import CheckPartner from "./pages/Services/CheckPartner";
+import FXForecast from "./pages/Services/FXForecast";
+import TenderBot from "./pages/Services/TenderBot";
+import SmartTax from "./pages/Services/SmartTax";
+
 
 function App() {
   return (
@@ -49,10 +59,26 @@ function App() {
           }
         />
         <Route
+          path="/transaction-history"
+          element={
+            <MainLayout>
+              <TransactionHistory />
+            </MainLayout>
+          }
+        />
+        <Route
           path="/documents"
           element={
             <MainLayout>
               <Documents />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/partner-detail/:id"
+          element={
+            <MainLayout>
+              <PartnerDetail />
             </MainLayout>
           }
         />
@@ -64,6 +90,38 @@ function App() {
             </MainLayout>
           }
         />
+        <Route
+          path="/cash-flow"
+          element={
+            <MainLayout>
+              <CashFlow />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/ai-insights"
+          element={
+            <MainLayout>
+              <AIInsights />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/services"
+          element={
+            <MainLayout>
+              <Services />
+            </MainLayout>
+          }
+        />
+        <Route path="/services/tender-bot" element={<TenderBot />} />
+        
+        <Route path="/services/tax-calc" element={<SmartTax />} />
+
+        <Route path="/services/partner-check" element={<CheckPartner />} />
+
+        <Route path="/services/fx-forecast" element={<FXForecast />} />
+        
         <Route
           path="/account-detail"
           element={
@@ -90,14 +148,7 @@ function App() {
             </MainLayout>
           }
         />
-        <Route
-          path="/ai-assistant"
-          element={
-            <MainLayout>
-          
-            </MainLayout>
-          }
-        />
+        <Route path="/ai-assistant" element={<MainLayout></MainLayout>} />
         <Route
           path="/analytics"
           element={
