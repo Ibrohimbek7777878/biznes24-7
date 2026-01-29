@@ -27,7 +27,7 @@ import CheckPartner from "./pages/Services/CheckPartner";
 import FXForecast from "./pages/Services/FXForecast";
 import TenderBot from "./pages/Services/TenderBot";
 import SmartTax from "./pages/Services/SmartTax";
-
+import GlobalMarkets from "./pages/Services/GlobalMarkets"
 
 function App() {
   return (
@@ -115,13 +115,21 @@ function App() {
           }
         />
         <Route path="/services/tender-bot" element={<TenderBot />} />
-        
+
         <Route path="/services/tax-calc" element={<SmartTax />} />
 
         <Route path="/services/partner-check" element={<CheckPartner />} />
 
         <Route path="/services/fx-forecast" element={<FXForecast />} />
-        
+
+        <Route
+          path="/services/fx-forecast"
+          element={
+            <MainLayout>
+              <GlobalMarkets />
+            </MainLayout>
+          }
+        />
         <Route
           path="/account-detail"
           element={

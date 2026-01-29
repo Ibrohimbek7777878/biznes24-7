@@ -16,7 +16,6 @@ const Login = () => {
           Bank rivojlanish biznesi
         </p>
       </div>
-
       <div className="w-full space-y-5">
         <div className="relative">
           <User className="absolute left-4 top-4 text-gray-400" size={20} />
@@ -44,10 +43,18 @@ const Login = () => {
           <QrCode size={20} /> QR orqali kirish
         </button>
       </div>
-
       <p className="text-xs text-gray-400 font-medium pb-4 uppercase tracking-widest">
         Secure Banking v4.0
       </p>
+      // Login.jsx ichidagi FaceID qismidan pastga qo'shing
+      <div className="mt-8 text-center space-y-1">
+        <p className="text-[10px] text-slate-400 font-medium">
+          Oxirgi kirish: 24.01.2024, 14:20
+        </p>
+        <p className="text-[10px] text-slate-400 font-medium tracking-tighter">
+          IP manzil: 178.218.201.14 (Toshkent, UZ)
+        </p>
+      </div>
     </div>
   );
 };

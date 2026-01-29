@@ -123,7 +123,23 @@ const TransactionHistory = () => {
           </button>
         </div>
       </div>
+      // Har bir tranzaksiya kartasi ichiga qo'shing:
+      <div className="flex justify-between items-center mt-3 pt-3 border-t border-slate-50">
+        {/* AML Check Indikatori */}
+        <div className="flex items-center gap-1">
+          <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+          <span className="text-[9px] font-black text-slate-400 uppercase">
+            AML Tekshiruvi: Xavfsiz
+          </span>
+        </div>
 
+        {/* Real komissiya */}
+        <div className="text-right">
+          <p className="text-[9px] font-bold text-rose-500 italic">
+            Komissiya: -12,450 UZS
+          </p>
+        </div>
+      </div>
       <div className="p-6 space-y-6">
         {/* 3. Summary Card */}
         <div

@@ -6,85 +6,115 @@ import {
   TrendingDown,
   CheckCircle,
   Info,
+  AlertTriangle, // Import qo'shildi
+  ShieldCheck,
+  Zap,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion"; // Animatsiya uchun
 
 const SmartTax = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
-      <div className="p-6 bg-white border-b border-slate-100 flex items-center gap-4">
-        <button
-          onClick={() => navigate(-1)}
-          className="p-2 hover:bg-slate-50 rounded-xl"
-        >
-          <ArrowLeft size={24} />
+    <div className="max-w-md mx-auto p-6 space-y-6 bg-slate-50 min-h-screen">
+      {/* Sarlavha qismi */}
+      <div className="flex items-center gap-4">
+        <button className="p-2 bg-white rounded-full shadow-sm">
+          <ArrowLeft size={20} className="text-slate-600" />
         </button>
-        <h1 className="text-lg font-black text-slate-800 uppercase tracking-tighter">
-          Smart Soliq
-        </h1>
+        <h1 className="font-bold text-xl text-slate-800">Smart Soliq</h1>
       </div>
 
-      <div className="p-6 space-y-6">
-        {/* Tax Load Dashboard */}
-        <section className="bg-white p-6 rounded-[35px] border border-slate-100 shadow-sm text-center">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[3px] mb-4">
-            Joriy chorakdagi soliq yuki
-          </p>
-          <div className="relative inline-flex items-center justify-center mb-6">
-            <svg className="w-32 h-32 transform -rotate-90">
-              <circle
-                cx="64"
-                cy="64"
-                r="58"
-                stroke="currentColor"
-                strokeWidth="12"
-                fill="transparent"
-                className="text-slate-100"
-              />
-              <circle
-                cx="64"
-                cy="64"
-                r="58"
-                stroke="currentColor"
-                strokeWidth="12"
-                fill="transparent"
-                strokeDasharray={364.4}
-                strokeDashoffset={364.4 * 0.3}
-                className="text-orange-500"
-                strokeLinecap="round"
-              />
-            </svg>
-            <div className="absolute flex flex-col">
-              <span className="text-2xl font-black text-slate-800">12%</span>
-              <span className="text-[8px] font-bold text-slate-400 uppercase">
-                Optimal
-              </span>
-            </div>
-          </div>
-          <h2 className="text-2xl font-black text-slate-800">
-            45,800,000 <span className="text-xs font-normal">UZS</span>
-          </h2>
-        </section>
-
-        {/* AI Optimization Advice */}
-        <div className="bg-orange-50 border border-orange-100 rounded-[30px] p-6 space-y-4">
-          <div className="flex items-center gap-3 text-orange-600">
-            <TrendingDown size={24} />
-            <h4 className="font-black text-sm uppercase italic">
-              Soliqni optimallashtirish
-            </h4>
-          </div>
-          <p className="text-xs text-slate-600 leading-relaxed italic">
-            "AI tahliliga ko'ra, sizda qoplanadigan QQS miqdori 4.2 mln so'mga
-            ko'p bo'lishi mumkin edi. Buxgalteriyaga INV-24 hujjatini kiritishni
-            eslatamiz."
-          </p>
-          <button className="w-full bg-orange-500 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-orange-200 active:scale-95 transition-all">
-            Tahlilni PDF yuklash
-          </button>
+      {/* Bo'lim vazifasi (Clarification) */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-indigo-600 rounded-[30px] p-6 text-white shadow-xl relative overflow-hidden"
+      >
+        <div className="absolute top-0 right-0 p-4 opacity-10">
+          <Calculator size={80} />
         </div>
+        <div className="flex items-center gap-3 mb-3">
+          <div className="p-2 bg-white/20 rounded-lg">
+            <ShieldCheck size={20} className="text-white" />
+          </div>
+          <h2 className="font-bold text-lg">Smart Soliq nima?</h2>
+        </div>
+        <p className="text-[12px] opacity-90 leading-relaxed relative z-10">
+          Ushbu bo'lim kompaniyangizning tranzaksiyalarini tahlil qilib, soliq
+          yukini hisoblaydi va qonuniy soliq imtiyozlaridan foydalanish bo'yicha
+          AI maslahatlar beradi.
+        </p>
+      </motion.div>
+
+      {/* Dinamik tahlil ko'rsatkichi */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+          <PieChart className="text-indigo-500 mb-2" size={20} />
+          <p className="text-[10px] text-slate-400 font-bold uppercase">
+            Soliq yuki
+          </p>
+          <p className="text-lg font-black text-slate-800">12%</p>
+        </div>
+        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+          <TrendingDown className="text-emerald-500 mb-2" size={20} />
+          <p className="text-[10px] text-slate-400 font-bold uppercase">
+            Tejov
+          </p>
+          <p className="text-lg font-black text-slate-800">4.2 mln</p>
+        </div>
+      </div>
+
+      {/* Tahlil natijasi */}
+      <div className="bg-white p-6 rounded-[30px] border border-slate-100 shadow-sm">
+        <div className="flex items-center gap-2 mb-6">
+          <Zap size={16} className="text-amber-500 fill-amber-500" />
+          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+            AI Tavsiyasi & Tahlil
+          </h3>
+        </div>
+
+        <ul className="space-y-6">
+          <motion.li whileHover={{ x: 5 }} className="flex gap-4 items-start">
+            <div className="p-2 bg-emerald-50 rounded-xl">
+              <CheckCircle className="text-emerald-500" size={18} />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-800">
+                QQS bo'yicha qoplama
+              </p>
+              <p className="text-[11px] text-slate-500 leading-tight mt-1">
+                Joriy chorak uchun 12.4 mln UZS summani qaytarib olish
+                imkoniyati aniqlandi.
+              </p>
+            </div>
+          </motion.li>
+
+          <motion.li whileHover={{ x: 5 }} className="flex gap-4 items-start">
+            <div className="p-2 bg-orange-50 rounded-xl">
+              <AlertTriangle className="text-orange-500" size={18} />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-800">
+                Muddat yaqinlashmoqda
+              </p>
+              <p className="text-[11px] text-slate-500 leading-tight mt-1">
+                Soliq hisoboti topshirishga 4 kun qoldi. Hujjatlarni E-imzo
+                orqali tasdiqlang.
+              </p>
+            </div>
+          </motion.li>
+        </ul>
+
+        <button className="w-full mt-8 py-4 bg-slate-900 text-white rounded-2xl font-bold text-xs shadow-lg active:scale-95 transition-all">
+          To'liq hisobotni yuklash
+        </button>
+      </div>
+
+      {/* Yordamchi yozuv */}
+      <div className="flex justify-center items-center gap-2 text-slate-400">
+        <Info size={14} />
+        <p className="text-[10px] italic">
+          Ma'lumotlar real vaqt rejimida yangilanmoqda
+        </p>
       </div>
     </div>
   );

@@ -1,103 +1,157 @@
-import React from "react";
+import React, { useState } from "react"; // useState qo'shildi
 import { motion } from "framer-motion";
-import {
-  ArrowLeft,
-  TrendingUp,
-  TrendingDown,
-  Info,
-  Calendar,
-  DollarSign,
-} from "lucide-react";
+import { TrendingUp, TrendingDown, Info, DollarSign } from "lucide-react";
 import { AreaChart, Area, XAxis, ResponsiveContainer, Tooltip } from "recharts";
-import { useNavigate } from "react-router-dom";
-
-const data = [
-  { day: "Bugun", val: 12450 },
-  { day: "05-feb", val: 12480 },
-  { day: "10-feb", val: 12420 },
-  { day: "15-feb", val: 12510 },
-  { day: "20-feb", val: 12560 },
-  { day: "25-feb", val: 12600 },
-];
 
 const FXForecast = () => {
-  const navigate = useNavigate();
+  // Tanlangan valyuta holati
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+
+  // Har bir valyuta uchun bashorat ma'lumotlari
+  const currencyData = {
+    USD: [
+      { day: "01-Feb", val: 12450 },
+      { day: "05-Feb", val: 12480 },
+      { day: "10-Feb", val: 12420 },
+      { day: "15-Feb", val: 12510 },
+      { day: "20-Feb", val: 12560 },
+      { day: "28-Feb", val: 12600 },
+    ],
+    RUB: [
+      { day: "01-Feb", val: 138 },
+      { day: "05-Feb", val: 140 },
+      { day: "10-Feb", val: 142 },
+      { day: "15-Feb", val: 141 },
+      { day: "20-Feb", val: 139 },
+      { day: "28-Feb", val: 135 },
+    ],
+    EUR: [
+      { day: "01-Feb", val: 13500 },
+      { day: "05-Feb", val: 13550 },
+      { day: "10-Feb", val: 13600 },
+      { day: "15-Feb", val: 13650 },
+      { day: "20-Feb", val: 13580 },
+      { day: "28-Feb", val: 13400 },
+    ],
+  };
+
+  // Dinamik ranglar va trendni aniqlash (oddiy misol)
+  const isUp =
+    currencyData[selectedCurrency][currencyData[selectedCurrency].length - 1]
+      .val > currencyData[selectedCurrency][0].val;
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
-      <div className="p-6 bg-white border-b border-slate-100 flex items-center gap-4">
-        <button
-          onClick={() => navigate(-1)}
-          className="p-2 hover:bg-slate-50 rounded-xl"
-        >
-          <ArrowLeft size={24} />
-        </button>
-        <h1 className="text-lg font-black text-slate-800 uppercase tracking-tighter">
-          Valyuta Bashorati
-        </h1>
+    <div className="max-w-md mx-auto space-y-6 p-6 bg-white min-h-screen">
+      {/* Sarlavha */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-slate-800">Valyuta Bashorati</h2>
+        <Info size={20} className="text-slate-400" />
       </div>
 
-      <div className="p-6 space-y-6">
-        {/* Bashorat Grafigi */}
-        <section className="bg-slate-900 rounded-[35px] p-6 text-white shadow-xl relative overflow-hidden">
-          <div className="relative z-10">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xs font-black uppercase tracking-widest text-indigo-400">
-                USD / UZS Bashorati
-              </h3>
-              <span className="text-[9px] font-black bg-white/10 px-2 py-1 rounded">
-                30 Kunlik
-              </span>
-            </div>
-            <div className="h-44 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={data}>
-                  <defs>
-                    <linearGradient id="colorFX" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#6366F1" stopOpacity={0.8} />
-                      <stop offset="95%" stopColor="#6366F1" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <Area
-                    type="monotone"
-                    dataKey="val"
-                    stroke="#818CF8"
-                    strokeWidth={3}
-                    fill="url(#colorFX)"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </section>
+      {/* Valyuta tanlash (Tabs) */}
+      <div className="flex bg-slate-100 p-1 rounded-2xl shadow-inner">
+        {["USD", "RUB", "EUR"].map((curr) => (
+          <button
+            key={curr}
+            onClick={() => setSelectedCurrency(curr)}
+            className={`flex-1 py-3 text-sm font-bold rounded-xl transition-all duration-300 ${
+              selectedCurrency === curr
+                ? "bg-white text-blue-600 shadow-md"
+                : "text-slate-400 hover:text-slate-600"
+            }`}
+          >
+            {curr}
+          </button>
+        ))}
+      </div>
 
-        {/* AI Maslahati */}
-        <div className="bg-white p-6 rounded-[30px] border border-slate-100 shadow-sm space-y-4">
-          <div className="flex items-center gap-3 text-emerald-600">
-            <TrendingUp size={24} />
-            <h4 className="font-black text-sm uppercase">AI Tavsiya qiladi</h4>
+      {/* Grafik Kartochkasi */}
+      <motion.section
+        key={selectedCurrency}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-slate-900 rounded-[35px] p-6 text-white shadow-2xl relative overflow-hidden"
+      >
+        <div className="flex justify-between items-start mb-4">
+          <div>
+            <h3 className="text-xs font-black uppercase tracking-widest text-indigo-400 mb-1">
+              {selectedCurrency} / UZS Oylik kutilma
+            </h3>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold">
+                {currencyData[selectedCurrency][
+                  currencyData[selectedCurrency].length - 1
+                ].val.toLocaleString()}
+              </span>
+              {isUp ? (
+                <TrendingUp size={20} className="text-green-400" />
+              ) : (
+                <TrendingDown size={20} className="text-red-400" />
+              )}
+            </div>
           </div>
-          <p className="text-xs text-slate-500 leading-relaxed italic">
-            "AI tahlillari shuni ko'rsatmoqdaki, kurs 10-fevral atrofida 12,420
-            gacha tushishi kutilmoqda. Shartnomalar bo'yicha valyuta xaridini
-            shu kunga rejalashtirishni maslahat beramiz."
+          <DollarSign className="text-indigo-500 opacity-50" />
+        </div>
+
+        <div className="h-48 w-full mt-4">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={currencyData[selectedCurrency]}>
+              <defs>
+                <linearGradient id="colorVal" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#818CF8" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#818CF8" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1e293b",
+                  border: "none",
+                  borderRadius: "10px",
+                  fontSize: "12px",
+                }}
+                itemStyle={{ color: "#fff" }}
+              />
+              <XAxis
+                dataKey="day"
+                hide={false}
+                stroke="#475569"
+                fontSize={10}
+                tickLine={false}
+                axisLine={false}
+              />
+              <Area
+                type="monotone"
+                dataKey="val"
+                stroke="#818CF8"
+                strokeWidth={3}
+                fillOpacity={1}
+                fill="url(#colorVal)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </motion.section>
+
+      {/* Qo'shimcha ma'lumot */}
+      <div className="bg-blue-50 p-4 rounded-2xl flex gap-4 items-center">
+        <div className="bg-blue-600 p-2 rounded-lg text-white">
+          <TrendingUp size={20} />
+        </div>
+        <div>
+          <p className="text-sm font-bold text-slate-800 italic">
+            Statistik tahlil
           </p>
-          <div className="pt-4 border-t border-slate-50 flex justify-between">
-            <div>
-              <p className="text-[9px] font-black text-slate-400 uppercase">
-                Hozirgi kurs
-              </p>
-              <p className="text-base font-black text-slate-800">12,450.00</p>
-            </div>
-            <div className="text-right">
-              <p className="text-[9px] font-black text-slate-400 uppercase">
-                Kutilayotgan foyda
-              </p>
-              <p className="text-base font-black text-emerald-500">+$12,400</p>
-            </div>
-          </div>
+          <p className="text-xs text-slate-500">
+            Fevral oyi yakuniga ko'ra {selectedCurrency} kursi{" "}
+            {isUp ? "ko'tarilishi" : "tushishi"} kutilmoqda.
+          </p>
         </div>
       </div>
+
+      <p className="text-[10px] text-slate-400 italic text-center px-4 leading-relaxed">
+        *Ushbu bashorat sun'iy intellekt tahliliga asoslangan va investitsion
+        maslahat hisoblanmaydi.
+      </p>
     </div>
   );
 };
